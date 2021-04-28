@@ -14,6 +14,14 @@ func SetFloat(value float64) Float {
 	}
 }
 
+func (mf Float) HasValue() bool {
+	return mf.hasValue
+}
+
+func (mf Float) Value() float64 {
+	return mf.value
+}
+
 func (mf *Float) UnmarshalJSON(data []byte) error {
 	var f *float64
 	if err := json.Unmarshal(data, &f); err != nil {

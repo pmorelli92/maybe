@@ -4,9 +4,18 @@ import (
 	"encoding/json"
 )
 
+// Bool allows
 type Bool struct {
 	value    bool
 	hasValue bool
+}
+
+func (mb Bool) HasValue() bool {
+	return mb.hasValue
+}
+
+func (mb Bool) Value() bool {
+	return mb.value
 }
 
 func SetBool(value bool) Bool {

@@ -7,24 +7,73 @@ import (
 )
 
 func Test_SetBool(t *testing.T) {
-	type args struct {
-		value bool
-	}
 	tests := []struct {
 		name string
-		args args
+		args bool
 		want Bool
 	}{
 		{
 			name: "Valid bool",
-			args: args{value: true},
+			args: true,
 			want: Bool{hasValue: true, value: true},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SetBool(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+			if got := SetBool(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SetBool() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Bool_HasValue(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Bool
+		want bool
+	}{
+		{
+			name: "Has value",
+			arg:  Bool{hasValue: true},
+			want: true,
+		},
+		{
+			name: "Hasn't value",
+			arg:  Bool{},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.HasValue(); got != tt.want {
+				t.Errorf("HasValue() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Bool_Value(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Bool
+		want bool
+	}{
+		{
+			name: "Value is set",
+			arg:  SetBool(true),
+			want: true,
+		},
+		{
+			name: "Value is not set",
+			arg:  Bool{},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.Value(); got != tt.want {
+				t.Errorf("Value() = %v, want %v", got, tt.want)
 			}
 		})
 	}

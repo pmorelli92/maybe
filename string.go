@@ -14,6 +14,14 @@ func SetString(value string) String {
 	}
 }
 
+func (ms String) HasValue() bool {
+	return ms.hasValue
+}
+
+func (ms String) Value() string {
+	return ms.value
+}
+
 func (ms *String) UnmarshalJSON(data []byte) error {
 	var s *string
 	if err := json.Unmarshal(data, &s); err != nil {

@@ -17,6 +17,14 @@ func SetTime(value time.Time) Time {
 	}
 }
 
+func (mt Time) HasValue() bool {
+	return mt.hasValue
+}
+
+func (mt Time) Value() time.Time {
+	return mt.value
+}
+
 func (mt *Time) UnmarshalJSON(data []byte) error {
 	var t *time.Time
 	if err := json.Unmarshal(data, &t); err != nil {

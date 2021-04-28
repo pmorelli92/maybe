@@ -7,24 +7,73 @@ import (
 )
 
 func Test_SetFloat(t *testing.T) {
-	type args struct {
-		value float64
-	}
 	tests := []struct {
 		name string
-		args args
+		args float64
 		want Float
 	}{
 		{
 			name: "Valid float",
-			args: args{value: 72.4},
+			args: 72.4,
 			want: Float{hasValue: true, value: 72.4},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SetFloat(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+			if got := SetFloat(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SetFloat() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Float_HasValue(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Float
+		want bool
+	}{
+		{
+			name: "Has value",
+			arg:  Float{hasValue: true},
+			want: true,
+		},
+		{
+			name: "Hasn't value",
+			arg:  Float{},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.HasValue(); got != tt.want {
+				t.Errorf("HasValue() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Float_Value(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Float
+		want float64
+	}{
+		{
+			name: "Value is set",
+			arg:  SetFloat(72.4),
+			want: 72.4,
+		},
+		{
+			name: "Value is not set",
+			arg:  Float{},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.Value(); got != tt.want {
+				t.Errorf("Value() = %v, want %v", got, tt.want)
 			}
 		})
 	}

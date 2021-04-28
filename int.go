@@ -14,6 +14,14 @@ func SetInt(value int) Int {
 	}
 }
 
+func (mi Int) HasValue() bool {
+	return mi.hasValue
+}
+
+func (mi Int) Value() int {
+	return mi.value
+}
+
 func (mi *Int) UnmarshalJSON(data []byte) error {
 	var i *int
 	if err := json.Unmarshal(data, &i); err != nil {

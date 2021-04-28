@@ -8,24 +8,73 @@ import (
 )
 
 func Test_SetTime(t *testing.T) {
-	type args struct {
-		value time.Time
-	}
 	tests := []struct {
 		name string
-		args args
+		args time.Time
 		want Time
 	}{
 		{
 			name: "Valid time",
-			args: args{value: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)},
+			args: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC),
 			want: Time{hasValue: true, value: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SetTime(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+			if got := SetTime(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SetTime() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Time_HasValue(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Time
+		want bool
+	}{
+		{
+			name: "Has value",
+			arg:  Time{hasValue: true},
+			want: true,
+		},
+		{
+			name: "Hasn't value",
+			arg:  Time{},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.HasValue(); got != tt.want {
+				t.Errorf("HasValue() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_Time_Value(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  Time
+		want time.Time
+	}{
+		{
+			name: "Value is set",
+			arg:  SetTime(time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)),
+			want: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC),
+		},
+		{
+			name: "Value is not set",
+			arg:  Time{},
+			want: time.Time{},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.Value(); got != tt.want {
+				t.Errorf("Value() = %v, want %v", got, tt.want)
 			}
 		})
 	}

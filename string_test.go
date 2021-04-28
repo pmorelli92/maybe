@@ -7,24 +7,73 @@ import (
 )
 
 func Test_SetString(t *testing.T) {
-	type args struct {
-		value string
-	}
 	tests := []struct {
 		name string
-		args args
+		args string
 		want String
 	}{
 		{
 			name: "Valid string",
-			args: args{value: "Pablo"},
+			args: "Pablo",
 			want: String{hasValue: true, value: "Pablo"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SetString(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+			if got := SetString(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SetString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_String_HasValue(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  String
+		want bool
+	}{
+		{
+			name: "Has value",
+			arg:  String{hasValue: true},
+			want: true,
+		},
+		{
+			name: "Hasn't value",
+			arg:  String{},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.HasValue(); got != tt.want {
+				t.Errorf("HasValue() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_String_Value(t *testing.T) {
+	tests := []struct {
+		name string
+		arg  String
+		want string
+	}{
+		{
+			name: "Value is set",
+			arg:  SetString("Pablo"),
+			want: "Pablo",
+		},
+		{
+			name: "Value is not set",
+			arg:  String{},
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.arg.Value(); got != tt.want {
+				t.Errorf("Value() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -41,15 +41,15 @@ func Test_Float_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Property get serialised",
-			data: person{Weight: SetFloat(72.40)},
-			want: []byte(`{"weight":72.4}`),
+			name:    "Property get serialised",
+			data:    person{Weight: SetFloat(72.40)},
+			want:    []byte(`{"weight":72.4}`),
 			wantErr: false,
 		},
 		{
-			name: "Property does not get serialised",
-			data: person{Weight: Float{}},
-			want: []byte(`{"weight":null}`),
+			name:    "Property does not get serialised",
+			data:    person{Weight: Float{}},
+			want:    []byte(`{"weight":null}`),
 			wantErr: false,
 		},
 	}
@@ -78,21 +78,21 @@ func Test_Float_Unmarshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Unmarshal with value",
-			data: []byte(`{"weight":72.4}`),
-			want: person{Weight: SetFloat(72.40)},
+			name:    "Unmarshal with value",
+			data:    []byte(`{"weight":72.4}`),
+			want:    person{Weight: SetFloat(72.40)},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value",
-			data: []byte(`{"weight":null}`),
-			want: person{Weight: Float{}},
+			name:    "Unmarshal without value",
+			data:    []byte(`{"weight":null}`),
+			want:    person{Weight: Float{}},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value (property missing)",
-			data: []byte(`{}`),
-			want: person{Weight: Float{}},
+			name:    "Unmarshal without value (property missing)",
+			data:    []byte(`{}`),
+			want:    person{Weight: Float{}},
 			wantErr: false,
 		},
 	}

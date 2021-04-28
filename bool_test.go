@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-
 func Test_SetBool(t *testing.T) {
 	type args struct {
 		value bool
@@ -42,15 +41,15 @@ func Test_Bool_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Property get serialised",
-			data: person{IsCitizen: SetBool(false)},
-			want: []byte(`{"is_citizen":false}`),
+			name:    "Property get serialised",
+			data:    person{IsCitizen: SetBool(false)},
+			want:    []byte(`{"is_citizen":false}`),
 			wantErr: false,
 		},
 		{
-			name: "Property does not get serialised",
-			data: person{IsCitizen: Bool{}},
-			want: []byte(`{"is_citizen":null}`),
+			name:    "Property does not get serialised",
+			data:    person{IsCitizen: Bool{}},
+			want:    []byte(`{"is_citizen":null}`),
 			wantErr: false,
 		},
 	}
@@ -79,21 +78,21 @@ func Test_Bool_Unmarshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Unmarshal with value",
-			data: []byte(`{"is_citizen":false}`),
-			want: person{IsCitizen: SetBool(false)},
+			name:    "Unmarshal with value",
+			data:    []byte(`{"is_citizen":false}`),
+			want:    person{IsCitizen: SetBool(false)},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value",
-			data: []byte(`{"is_citizen":null}`),
-			want: person{IsCitizen: Bool{}},
+			name:    "Unmarshal without value",
+			data:    []byte(`{"is_citizen":null}`),
+			want:    person{IsCitizen: Bool{}},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value (property missing)",
-			data: []byte(`{}`),
-			want: person{IsCitizen: Bool{}},
+			name:    "Unmarshal without value (property missing)",
+			data:    []byte(`{}`),
+			want:    person{IsCitizen: Bool{}},
 			wantErr: false,
 		},
 	}

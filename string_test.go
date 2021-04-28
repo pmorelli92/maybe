@@ -41,15 +41,15 @@ func Test_String_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Property get serialised",
-			data: person{Name: SetString("Pablo")},
-			want: []byte(`{"name":"Pablo"}`),
+			name:    "Property get serialised",
+			data:    person{Name: SetString("Pablo")},
+			want:    []byte(`{"name":"Pablo"}`),
 			wantErr: false,
 		},
 		{
-			name: "Property does not get serialised",
-			data: person{Name: String{}},
-			want: []byte(`{"name":null}`),
+			name:    "Property does not get serialised",
+			data:    person{Name: String{}},
+			want:    []byte(`{"name":null}`),
 			wantErr: false,
 		},
 	}
@@ -78,21 +78,21 @@ func Test_String_Unmarshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Unmarshal with value",
-			data: []byte(`{"name":"Pablo"}`),
-			want: person{Name: SetString("Pablo")},
+			name:    "Unmarshal with value",
+			data:    []byte(`{"name":"Pablo"}`),
+			want:    person{Name: SetString("Pablo")},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value",
-			data: []byte(`{"name":null}`),
-			want: person{Name: String{}},
+			name:    "Unmarshal without value",
+			data:    []byte(`{"name":null}`),
+			want:    person{Name: String{}},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value (property missing)",
-			data: []byte(`{}`),
-			want: person{Name: String{}},
+			name:    "Unmarshal without value (property missing)",
+			data:    []byte(`{}`),
+			want:    person{Name: String{}},
 			wantErr: false,
 		},
 	}

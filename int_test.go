@@ -41,15 +41,15 @@ func Test_Int_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Property get serialised",
-			data: person{Age: SetInt(28)},
-			want: []byte(`{"age":28}`),
+			name:    "Property get serialised",
+			data:    person{Age: SetInt(28)},
+			want:    []byte(`{"age":28}`),
 			wantErr: false,
 		},
 		{
-			name: "Property does not get serialised",
-			data: person{Age: Int{}},
-			want: []byte(`{"age":null}`),
+			name:    "Property does not get serialised",
+			data:    person{Age: Int{}},
+			want:    []byte(`{"age":null}`),
 			wantErr: false,
 		},
 	}
@@ -78,21 +78,21 @@ func Test_Int_Unmarshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Unmarshal with value",
-			data: []byte(`{"age":28}`),
-			want: person{Age: SetInt(28)},
+			name:    "Unmarshal with value",
+			data:    []byte(`{"age":28}`),
+			want:    person{Age: SetInt(28)},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value",
-			data: []byte(`{"age":null}`),
-			want: person{Age: Int{}},
+			name:    "Unmarshal without value",
+			data:    []byte(`{"age":null}`),
+			want:    person{Age: Int{}},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value (property missing)",
-			data: []byte(`{}`),
-			want: person{Age: Int{}},
+			name:    "Unmarshal without value (property missing)",
+			data:    []byte(`{}`),
+			want:    person{Age: Int{}},
 			wantErr: false,
 		},
 	}

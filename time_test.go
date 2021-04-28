@@ -18,8 +18,8 @@ func Test_SetTime(t *testing.T) {
 	}{
 		{
 			name: "Valid time",
-			args: args{value: time.Date(2020, 04, 28, 18,34,52,0, time.UTC)},
-			want: Time{hasValue: true, value: time.Date(2020, 04, 28, 18,34,52,0, time.UTC)},
+			args: args{value: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)},
+			want: Time{hasValue: true, value: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)},
 		},
 	}
 	for _, tt := range tests {
@@ -42,15 +42,15 @@ func Test_Time_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Property get serialised",
-			data: person{CreatedAt: SetTime(time.Date(2020, 04, 28, 18,34,52,0, time.UTC))},
-			want: []byte(`{"created_at":"2020-04-28T18:34:52Z"}`),
+			name:    "Property get serialised",
+			data:    person{CreatedAt: SetTime(time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC))},
+			want:    []byte(`{"created_at":"2020-04-28T18:34:52Z"}`),
 			wantErr: false,
 		},
 		{
-			name: "Property does not get serialised",
-			data: person{CreatedAt: Time{}},
-			want: []byte(`{"created_at":null}`),
+			name:    "Property does not get serialised",
+			data:    person{CreatedAt: Time{}},
+			want:    []byte(`{"created_at":null}`),
 			wantErr: false,
 		},
 	}
@@ -79,21 +79,21 @@ func Test_Time_Unmarshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Unmarshal with value",
-			data: []byte(`{"created_at":"2020-04-28T18:34:52Z"}`),
-			want: person{CreatedAt: SetTime(time.Date(2020, 04, 28, 18,34,52,0, time.UTC))},
+			name:    "Unmarshal with value",
+			data:    []byte(`{"created_at":"2020-04-28T18:34:52Z"}`),
+			want:    person{CreatedAt: SetTime(time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC))},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value",
-			data: []byte(`{"created_at":null}`),
-			want: person{CreatedAt: Time{}},
+			name:    "Unmarshal without value",
+			data:    []byte(`{"created_at":null}`),
+			want:    person{CreatedAt: Time{}},
 			wantErr: false,
 		},
 		{
-			name: "Unmarshal without value (property missing)",
-			data: []byte(`{}`),
-			want: person{CreatedAt: Time{}},
+			name:    "Unmarshal without value (property missing)",
+			data:    []byte(`{}`),
+			want:    person{CreatedAt: Time{}},
 			wantErr: false,
 		},
 	}

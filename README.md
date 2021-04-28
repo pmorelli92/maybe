@@ -25,8 +25,9 @@ It can be used for transport layer (as it has json capabilities) but it could al
 package main
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
+
 	"github.com/pmorelli92/maybe"
 )
 
@@ -48,20 +49,21 @@ func main() {
 package main
 
 import (
-    "fmt"
-    "encoding/json"
-    "github.com/pmorelli92/maybe"
+	"encoding/json"
+	"fmt"
+
+	"github.com/pmorelli92/maybe"
 )
 
 type Person struct {
-    Name maybe.String `json:"name"`
-    Age  int          `json:"age"`
+	Name maybe.String `json:"name"`
+	Age  int          `json:"age"`
 }
 
 func main() {
-    p := Person{Age: 28, Name: maybe.SetString("Pablo")}
-    bytes, _ := json.Marshal(p)
-    fmt.Println(string(bytes)) // {"name":"Pablo","age":28}
+	p := Person{Age: 28, Name: maybe.SetString("Pablo")}
+	bytes, _ := json.Marshal(p)
+	fmt.Println(string(bytes)) // {"name":"Pablo","age":28}
 }
 ```
 
@@ -71,20 +73,21 @@ func main() {
 package main
 
 import (
-    "fmt"
-    "encoding/json"
-    "github.com/pmorelli92/maybe"
+	"encoding/json"
+	"fmt"
+
+	"github.com/pmorelli92/maybe"
 )
 
 type Person struct {
-    Name maybe.String `json:"name"`
-    Age  int          `json:"age"`
+	Name maybe.String `json:"name"`
+	Age  int          `json:"age"`
 }
 
 func main() {
-    var p Person
-    _ = json.Unmarshal([]byte(`{"age":28}`), &p)
-    fmt.Println(p.Name.HasValue()) // false
+	var p Person
+	_ = json.Unmarshal([]byte(`{"age":28}`), &p)
+	fmt.Println(p.Name.HasValue()) // false
 }
 ```
 
@@ -95,21 +98,22 @@ func main() {
 package main
 
 import (
-    "fmt"
-    "encoding/json"
-    "github.com/pmorelli92/maybe"
+	"encoding/json"
+	"fmt"
+
+	"github.com/pmorelli92/maybe"
 )
 
 type Person struct {
-    Name maybe.String `json:"name"`
-    Age  int          `json:"age"`
+	Name maybe.String `json:"name"`
+	Age  int          `json:"age"`
 }
 
 func main() {
-    var p Person
-    _ = json.Unmarshal([]byte(`{"age":28, "name": "Pablo"}`), &p)
-    fmt.Println(p.Name.HasValue()) // true
-    fmt.Println(p.Name.Value()) // Pablo
+	var p Person
+	_ = json.Unmarshal([]byte(`{"age":28, "name": "Pablo"}`), &p)
+	fmt.Println(p.Name.HasValue()) // true
+	fmt.Println(p.Name.Value())    // Pablo
 }
 ```
 

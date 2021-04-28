@@ -3,8 +3,15 @@ package maybe
 import "encoding/json"
 
 type String struct {
-	Value    string
-	HasValue bool
+	value    string
+	hasValue bool
+}
+
+func SetString(value string) String {
+	return String{
+		value:    value,
+		hasValue: true,
+	}
 }
 
 func (ms *String) UnmarshalJSON(data []byte) error {
@@ -14,10 +21,7 @@ func (ms *String) UnmarshalJSON(data []byte) error {
 	}
 
 	if s != nil {
-		*ms = String{
-			Value:    *s,
-			HasValue: true,
-		}
+		*ms = SetString(*s)
 	}
 
 	return nil
@@ -26,8 +30,8 @@ func (ms *String) UnmarshalJSON(data []byte) error {
 func (ms String) MarshalJSON() ([]byte, error) {
 	var s *string
 
-	if ms.HasValue {
-		s = &ms.Value
+	if ms.hasValue {
+		s = &ms.value
 	}
 
 	return json.Marshal(s)

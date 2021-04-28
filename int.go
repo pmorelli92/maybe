@@ -3,32 +3,36 @@ package maybe
 import "encoding/json"
 
 type Int struct {
-	Value    int
-	HasValue bool
+	value    int
+	hasValue bool
 }
 
-func (ms *Int) UnmarshalJSON(data []byte) error {
-	var s *int
-	if err := json.Unmarshal(data, &s); err != nil {
+func SetInt(value int) Int {
+	return Int{
+		value:    value,
+		hasValue: true,
+	}
+}
+
+func (mi *Int) UnmarshalJSON(data []byte) error {
+	var i *int
+	if err := json.Unmarshal(data, &i); err != nil {
 		return err
 	}
 
-	if s != nil {
-		*ms = Int{
-			Value:    *s,
-			HasValue: true,
-		}
+	if i != nil {
+		*mi = SetInt(*i)
 	}
 
 	return nil
 }
 
-func (ms Int) MarshalJSON() ([]byte, error) {
-	var s *int
+func (mi Int) MarshalJSON() ([]byte, error) {
+	var i *int
 
-	if ms.HasValue {
-		s = &ms.Value
+	if mi.hasValue {
+		i = &mi.value
 	}
 
-	return json.Marshal(s)
+	return json.Marshal(i)
 }

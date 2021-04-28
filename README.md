@@ -1,10 +1,19 @@
 ## Maybe
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/pmorelli92/maybe)](https://goreportcard.com/report/github.com/pmorelli92/maybe)
+
 Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki/Option_type) for some native Go types.
+
+### What does it offer:
+
+The types exported by this library are immutable and thread safe. The json serialization and deserialization works in the same way as with the native types. Using this library will free you up from using pointers and possible panics.
+
+It also gets rid of the situations where an absence of value means something different from a default (zero) value. For example: a person with salary 100 means he/she has a paid job, 0 means an unpaid internship and null means unemployed. Supporting yourself with Option eliminates the usage of null replacing it with `HasValue`.
+
 
 ### When should I use it:
 
-The types exported by this library are immutable and thread safe. The json serialization and deserialization works in the same way as with the native types.
+It can be used for transport layer (as it has json capabilities) but it could also be used on the domain layer.
 
 ### Examples:
 
@@ -115,4 +124,4 @@ If this library is not supporting certain type, feel free to do a pull request o
 ### Generics
 
 Go does not support generics as of now, but the draft was recently approved. When they become available on Go 1.18 this library will be updated and only a generic struct will remain.
-Some example on how it would look like on [go2playgrounds](https://go2goplay.golang.org/p/YBqR5GX7N6m).
+The library will look like this: [go2playgrounds](https://go2goplay.golang.org/p/YBqR5GX7N6m).

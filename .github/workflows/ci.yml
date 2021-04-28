@@ -26,10 +26,9 @@ jobs:
       run: go get github.com/mattn/goveralls
 
     - name: Test
-      run: go test -v -coverprofile=coverage.out
-
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: coverage.out
+      run: go test -race -covermode atomic -coverprofile=covprofile ./...
+      
+    - name: Send coverage
+      env:
+        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      run: goveralls -coverprofile=covprofile -service=github

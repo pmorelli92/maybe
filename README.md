@@ -39,7 +39,7 @@ type Person struct {
 func main() {
 	p := Person{Age: 28}
 	bytes, _ := json.Marshal(p)
-	fmt.Println(string(bytes)) // {"name":"null","age":28}
+	fmt.Println(string(bytes)) // {"name":null,"age":28}
 }
 ```
 

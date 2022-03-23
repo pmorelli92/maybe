@@ -4,11 +4,11 @@
 [![CI](https://github.com/pmorelli92/maybe/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pmorelli92/maybe/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pmorelli92/maybe/badge.svg?branch=main)](https://coveralls.io/github/pmorelli92/maybe?branch=main)
 
-Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki/Option_type) for some native Go types.
+Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki/Option_type) for Golang.
 
 ### What does it offer:
 
-The `Maybe[any]` type exported by this library is immutable and thread safe. The json serialization and de-serialization works in the same way as with the native types. Using this library will free you up from using pointers and possible panics.
+The `Maybe[any]` type exported by this library is immutable and thread safe. The json serialization and de-serialization works in the same way as with the underlying (any) type. Using this library will free you up from using pointers and possible panics.
 
 It also gets rid of the situations where an absence of value means something different from a default (zero) value. For example: a person with salary 100 means he/she has a paid job, 0 means an unpaid internship and null means unemployed. Supporting yourself with `Maybe[int]` eliminates the usage of null replacing it with `HasValue`:
 

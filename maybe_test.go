@@ -4,43 +4,64 @@ import (
 	"encoding/json"
 	"reflect"
 	"testing"
+	"time"
 )
 
-func Test_SetInt(t *testing.T) {
+func Test_Maybe_Set(t *testing.T) {
 	tests := []struct {
 		name string
-		args int
-		want Int
+		args any
+		want Maybe[any]
 	}{
 		{
-			name: "Valid int",
+			name: "maybe bool",
+			args: true,
+			want: Maybe[any]{hasValue: true, value: true},
+		},
+		{
+			name: "maybe float",
+			args: 72.4,
+			want: Maybe[any]{hasValue: true, value: 72.4},
+		},
+		{
+			name: "maybe int",
 			args: 28,
-			want: Int{hasValue: true, value: 28},
+			want: Maybe[any]{hasValue: true, value: 28},
+		},
+		{
+			name: "maybe string",
+			args: "foo",
+			want: Maybe[any]{hasValue: true, value: "foo"},
+		},
+		{
+			name: "maybe time",
+			args: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC),
+			want: Maybe[any]{hasValue: true, value: time.Date(2020, 04, 28, 18, 34, 52, 0, time.UTC)},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SetInt(tt.args); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("SetInt() = %v, want %v", got, tt.want)
+			if got := Set(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Set() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func Test_Int_HasValue(t *testing.T) {
+func Test_Maybe_HasValue(t *testing.T) {
 	tests := []struct {
 		name string
-		arg  Int
-		want bool
+		arg  Maybe[any]
+		want any
 	}{
 		{
-			name: "Has value",
-			arg:  Int{hasValue: true},
+			name: "has value",
+			arg:  Maybe[any]{hasValue: true},
 			want: true,
 		},
 		{
-			name: "Hasn't value",
-			arg:  Int{},
+			name: "hasn't value",
+			arg:  Maybe[any]{},
 			want: false,
 		},
 	}
@@ -53,20 +74,20 @@ func Test_Int_HasValue(t *testing.T) {
 	}
 }
 
-func Test_Int_Value(t *testing.T) {
+func Test_Maybe_Value(t *testing.T) {
 	tests := []struct {
 		name string
-		arg  Int
-		want int
+		arg  Maybe[int]
+		want any
 	}{
 		{
-			name: "Value is set",
-			arg:  SetInt(28),
-			want: 28,
+			name: "value is set",
+			arg:  Set(24),
+			want: 24,
 		},
 		{
 			name: "Value is not set",
-			arg:  Int{},
+			arg:  Maybe[int]{},
 			want: 0,
 		},
 	}
@@ -79,9 +100,9 @@ func Test_Int_Value(t *testing.T) {
 	}
 }
 
-func Test_Int_Marshal(t *testing.T) {
+func Test_Maybe_Marshal(t *testing.T) {
 	type person struct {
-		Age Int `json:"age"`
+		IsCitizen Maybe[bool] `json:"is_citizen"`
 	}
 	tests := []struct {
 		name    string
@@ -90,15 +111,15 @@ func Test_Int_Marshal(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Property get serialised",
-			data:    person{Age: SetInt(28)},
-			want:    []byte(`{"age":28}`),
+			name:    "property is serialized",
+			data:    person{IsCitizen: Set(false)},
+			want:    []byte(`{"is_citizen":false}`),
 			wantErr: false,
 		},
 		{
-			name:    "Property does not get serialised",
-			data:    person{Age: Int{}},
-			want:    []byte(`{"age":null}`),
+			name:    "Property isn't get serialized",
+			data:    person{},
+			want:    []byte(`{"is_citizen":null}`),
 			wantErr: false,
 		},
 	}
@@ -116,9 +137,9 @@ func Test_Int_Marshal(t *testing.T) {
 	}
 }
 
-func Test_Int_Unmarshal(t *testing.T) {
+func Test_Maybe_Unmarshal(t *testing.T) {
 	type person struct {
-		Age Int `json:"age"`
+		IsCitizen Maybe[bool] `json:"is_citizen"`
 	}
 	tests := []struct {
 		name    string
@@ -128,20 +149,20 @@ func Test_Int_Unmarshal(t *testing.T) {
 	}{
 		{
 			name:    "Unmarshal with value",
-			data:    []byte(`{"age":28}`),
-			want:    person{Age: SetInt(28)},
+			data:    []byte(`{"is_citizen":false}`),
+			want:    person{IsCitizen: Set(false)},
 			wantErr: false,
 		},
 		{
 			name:    "Unmarshal without value",
-			data:    []byte(`{"age":null}`),
-			want:    person{Age: Int{}},
+			data:    []byte(`{"is_citizen":null}`),
+			want:    person{IsCitizen: Maybe[bool]{hasValue: false}},
 			wantErr: false,
 		},
 		{
 			name:    "Unmarshal without value (property missing)",
 			data:    []byte(`{}`),
-			want:    person{Age: Int{}},
+			want:    person{IsCitizen: Maybe[bool]{hasValue: false}},
 			wantErr: false,
 		},
 	}

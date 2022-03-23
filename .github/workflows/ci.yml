@@ -14,7 +14,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16
+        go-version: 1.18
 
     - name: Build
       run: go build -v ./...
@@ -27,7 +27,7 @@ jobs:
 
     - name: Test
       run: go test -race -covermode atomic -coverprofile=covprofile ./...
-      
+
     - name: Send coverage
       env:
         COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}

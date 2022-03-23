@@ -8,10 +8,13 @@ Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki
 
 ### What does it offer:
 
-The types exported by this library are immutable and thread safe. The json serialization and deserialization works in the same way as with the native types. Using this library will free you up from using pointers and possible panics.
+The `Maybe[any]` type exported by this library is immutable and thread safe. The json serialization and de-serialization works in the same way as with the native types. Using this library will free you up from using pointers and possible panics.
 
-It also gets rid of the situations where an absence of value means something different from a default (zero) value. For example: a person with salary 100 means he/she has a paid job, 0 means an unpaid internship and null means unemployed. Supporting yourself with Option eliminates the usage of null replacing it with `HasValue`.
+It also gets rid of the situations where an absence of value means something different from a default (zero) value. For example: a person with salary 100 means he/she has a paid job, 0 means an unpaid internship and null means unemployed. Supporting yourself with `Maybe[int]` eliminates the usage of null replacing it with `HasValue`:
 
+- `salary.Value != 0` has a paid job.
+- `salary.Value == 0 && salary.HasValue` has an unpaid internship.
+- `salary.HasValue` does not have a job, this is serialized as `null` but you don't have to care about pointers.
 
 ### When should I use it:
 
@@ -19,7 +22,7 @@ It can be used for transport layer (as it has json capabilities) but it could al
 
 ### Examples:
 
-**Marshal of String Option without value**
+**Marshal of Maybe[string] without value**
 
 ```go
 package main
@@ -32,8 +35,8 @@ import (
 )
 
 type Person struct {
-	Name maybe.String `json:"name"`
-	Age  int          `json:"age"`
+	Name Maybe[string] `json:"name"`
+	Age  int           `json:"age"`
 }
 
 func main() {
@@ -43,7 +46,7 @@ func main() {
 }
 ```
 
-**Marshal of String Option with value**
+**Marshal of Maybe[string] with value**
 
 ```go
 package main
@@ -56,18 +59,18 @@ import (
 )
 
 type Person struct {
-	Name maybe.String `json:"name"`
-	Age  int          `json:"age"`
+	Name Maybe[string] `json:"name"`
+	Age  int           `json:"age"`
 }
 
 func main() {
-	p := Person{Age: 28, Name: maybe.SetString("Pablo")}
+	p := Person{Age: 28, Name: maybe.Set("Pablo")}
 	bytes, _ := json.Marshal(p)
 	fmt.Println(string(bytes)) // {"name":"Pablo","age":28}
 }
 ```
 
-**Unmarshal of String Option without value**
+**Unmarshal of Maybe[string] without value**
 
 ```go
 package main
@@ -80,8 +83,8 @@ import (
 )
 
 type Person struct {
-	Name maybe.String `json:"name"`
-	Age  int          `json:"age"`
+	Name Maybe[string] `json:"name"`
+	Age  int           `json:"age"`
 }
 
 func main() {
@@ -92,7 +95,7 @@ func main() {
 ```
 
 
-**Unmarshal of String Option with value**
+**Unmarshal of Maybe[string] with value**
 
 ```go
 package main
@@ -105,8 +108,8 @@ import (
 )
 
 type Person struct {
-	Name maybe.String `json:"name"`
-	Age  int          `json:"age"`
+	Name Maybe[string] `json:"name"`
+	Age  int           `json:"age"`
 }
 
 func main() {
@@ -119,15 +122,4 @@ func main() {
 
 ### Types supported:
 
-- bool
-- string
-- float
-- int
-- time
-
-If this library is not supporting certain type, feel free to do a pull request or add an issue asking for it.
-
-### Generics
-
-Go does not support generics as of now, but the draft was recently approved. When they become available on Go 1.18 this library will be updated and only a generic struct will remain.
-The library will look like this: [go2playgrounds](https://go2goplay.golang.org/p/YBqR5GX7N6m).
+`Maybe` is defined to support `[T any]` so it can support all underlying types. Personally I would not suggest using pointers as the underlying type as it will defeat the whole purpose.

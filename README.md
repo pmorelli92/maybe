@@ -35,8 +35,8 @@ import (
 )
 
 type Person struct {
-	Name Maybe[string] `json:"name"`
-	Age  int           `json:"age"`
+	Name maybe.Maybe[string] `json:"name"`
+	Age  int           		 `json:"age"`
 }
 
 func main() {
@@ -59,8 +59,8 @@ import (
 )
 
 type Person struct {
-	Name Maybe[string] `json:"name"`
-	Age  int           `json:"age"`
+	Name maybe.Maybe[string] `json:"name"`
+	Age  int           		 `json:"age"`
 }
 
 func main() {
@@ -83,8 +83,8 @@ import (
 )
 
 type Person struct {
-	Name Maybe[string] `json:"name"`
-	Age  int           `json:"age"`
+	Name maybe.Maybe[string] `json:"name"`
+	Age  int           		 `json:"age"`
 }
 
 func main() {
@@ -108,8 +108,8 @@ import (
 )
 
 type Person struct {
-	Name Maybe[string] `json:"name"`
-	Age  int           `json:"age"`
+	Name maybe.Maybe[string] `json:"name"`
+	Age  int           		 `json:"age"`
 }
 
 func main() {

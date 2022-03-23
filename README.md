@@ -4,7 +4,7 @@
 [![CI](https://github.com/pmorelli92/maybe/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pmorelli92/maybe/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pmorelli92/maybe/badge.svg?branch=main)](https://coveralls.io/github/pmorelli92/maybe?branch=main)
 
-Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki/Option_type) for Golang.
+Maybe is a library that adds an [Option data type](https://en.wikipedia.org/wiki/Option_type) for Golang. [Related blogpost here.](https://devandchill.com/posts/2021/04/introducing-maybe-package-bring-functional-to-go/)
 
 ### What does it offer:
 
